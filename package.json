@@ -1,0 +1,42 @@
+{
+  "name": "@tamiko303/purchasing",
+  "version": "1.1.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "tsc -p tsconfig.json",
+    "start": "node ./dist/index.js",
+    "dev": "npx @modelcontextprotocol/inspector node ./dist/index.js"
+  },
+  "keywords": [
+    "abap",
+    "sap",
+    "purchasing",
+    "mcp",
+    "model-context-protocol"
+  ],
+  "author": "tatsiana.kastrubai@artocons.com",
+  "description": "Purchaising. MCP Server for interacting with SAP systems",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tamiko303/mcp-purchasing.git"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.5.2",
+    "jest": "^30.3.0",
+    "ts-jest": "^29.4.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.2"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "axios": "^1.14.0",
+    "dotenv": "^17.4.0",
+    "xml-js": "^1.6.11"
+  }
+}
