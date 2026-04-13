@@ -14,8 +14,6 @@ import dotenv from 'dotenv';
 import { handleGetTableContents } from './handlers/handleGetTableContents';
 import { handleGetBusinessPartner } from './handlers/handleGetBusinessPartner';
 import { handleSetSupplierPurchasingBlock } from './handlers/handleSetSupplierPurchasingBlock';
-import { handleGetPurchaseOrder } from './handlers/handleGetPurchaseOrder';
-import { handleGetPOItemsByDateRange } from './handlers/handleGetPOItemsByDateRange';
 
 // Import tools
 import { tools } from './tools/tools';
@@ -103,10 +101,6 @@ export class mcp_purchasing_server {
           return await handleGetBusinessPartner(request.params.arguments);
         case 'SetSupplierPurchasingBlock':
           return await handleSetSupplierPurchasingBlock(request.params.arguments);
-        case 'GetPOItemsByDateRange':
-          return await handleGetPOItemsByDateRange(request.params.arguments);
-         case 'GetPOItemsByDateRange':
-          return await handleGetPurchaseOrder(request.params.arguments);
         default:
           throw new McpError(
             ErrorCode.MethodNotFound,
