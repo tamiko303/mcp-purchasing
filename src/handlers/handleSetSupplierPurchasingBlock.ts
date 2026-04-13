@@ -1,4 +1,4 @@
-import { McpError, ErrorCode, makeAdtRequest } from '../lib/utils';
+import { McpError, ErrorCode, makeRestRequest } from '../lib/utils';
 import { getBaseUrl, return_response, return_error } from '../lib/utils';
 
 export async function handleSetSupplierPurchasingBlock(args: any) {
@@ -21,7 +21,7 @@ export async function handleSetSupplierPurchasingBlock(args: any) {
 
         const supplierPOBody = { d: { PurchasingIsBlockedForSupplier: args.blocked } };
 
-        const patchResponse = await makeAdtRequest( url, 'PATCH', 30000,  supplierPOBody );
+        const patchResponse = await makeRestRequest( url, 'PATCH', 30000,  supplierPOBody );
 
         const action = args.blocked ? 'blocked' : 'unblocked';
         const parseData = {

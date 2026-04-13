@@ -1,5 +1,5 @@
 import { McpError, ErrorCode, AxiosResponse } from '../lib/utils';
-import { makeAdtRequest, return_error, return_response, getBaseUrl } from '../lib/utils';
+import { makeRestRequest, return_error, return_response, getBaseUrl } from '../lib/utils';
 
 export async function handleGetBusinessPartner(args: any) {
     try {
@@ -8,7 +8,7 @@ export async function handleGetBusinessPartner(args: any) {
         }
         const encodedPartnerNumber = encodeURIComponent(args.partner_number);
         const url = `${await getBaseUrl()}/sap/opu/odata/sap/api_business_partner/A_BusinessPartner('${encodedPartnerNumber}')?$format=json`;
-        const response = await makeAdtRequest(url, 'GET', 30000);
+        const response = await makeRestRequest(url, 'GET', 30000);
         response.data = JSON.stringify(response.data);
         return return_response(response);
     } catch (error) {
