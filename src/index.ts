@@ -17,9 +17,10 @@ import { handleSetSupplierPurchasingBlock } from './handlers/handleSetSupplierPu
 
 // Import tools
 import { tools } from './tools/tools';
+import { handleGetPOItemsByDateRange } from './handlers/handleGetPOItemsByDateRange';
 
 // Load environment variables from .env file
-dotenv.config({ path: path.resolve(__dirname, '../.env') });
+dotenv.config({ path: path.resolve(__dirname, '../.env'), quiet: true  });
 
 // Interface for SAP configuration
 export interface SapConfig {
@@ -101,6 +102,8 @@ export class mcp_purchasing_server {
           return await handleGetBusinessPartner(request.params.arguments);
         case 'SetSupplierPurchasingBlock':
           return await handleSetSupplierPurchasingBlock(request.params.arguments);
+        case 'GetPOItemsByDateRange':
+          return await handleGetPOItemsByDateRange(request.params.arguments);
         default:
           throw new McpError(
             ErrorCode.MethodNotFound,

@@ -6,7 +6,7 @@ import { getConfig, SapConfig } from '../index'; // getConfig needs to be export
 
 export { McpError, ErrorCode, AxiosResponse };
 
-import { TableRow, GetTableContentsArgs, GetTableContentsResult } from '../models/soap';
+import { TableRow, GetTableContentsArgs, GetTableContentsResult } from '../models/tableContent';
 import * as convert from "xml-js";
 
 export function return_response(response: AxiosResponse) {
