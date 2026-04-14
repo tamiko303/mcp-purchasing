@@ -68,5 +68,23 @@ export const tools: Tool[] = [
       },
       required: ['supplier', 'purchasing_org', 'blocked']
     }
+  },
+  {
+    name: 'GetPOItemsByDateRange',
+    description: 'Retrieve purchase order items filtered by delivery date range. Returns supplier, material, ordered quantities, amounts and delivery schedule lines.',
+    inputSchema: {
+        type: 'object',
+        properties: {
+            from: {
+                type: 'string',
+                description: 'Delivery date from (inclusive), format: YYYY-MM-DD'
+            },
+            to: {
+                type: 'string',
+                description: 'Delivery date to (inclusive), format: YYYY-MM-DD'
+            }
+        },
+        required: ['from', 'to']
+    }
   }
 ];
