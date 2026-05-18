@@ -1,6 +1,6 @@
 import { McpError, ErrorCode, return_error } from '../../lib/utils';
 import { toMcpResult } from '../../lib/formatters';
-import { fetchPOItemDetails } from '../../lib/putchasing.core';
+import { fetchPOItemDetails } from '../../lib/purchasing.core';
 
 /**
  * Возвращает мастер-данные одной позиции PO: материал, поставщик,
