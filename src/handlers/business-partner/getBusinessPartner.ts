@@ -1,5 +1,5 @@
-import { McpError, ErrorCode } from '../lib/utils';
-import { makeRestRequest, return_error, return_response, getBaseUrl } from '../lib/utils';
+import { McpError, ErrorCode } from '../../lib/utils';
+import { makeRestRequest, return_error, return_response, getBaseUrl } from '../../lib/utils';
 
 export async function handleGetBusinessPartner(args: any) {
     try {
