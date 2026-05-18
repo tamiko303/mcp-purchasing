@@ -1,5 +1,5 @@
-import { McpError, ErrorCode, makeSoapRequest } from '../lib/utils';
-import { getBaseUrl, buildSoapEnvelope, parseSoapResponse, return_error } from '../lib/utils';
+import { McpError, ErrorCode, makeSoapRequest } from '../../lib/utils';
+import { getBaseUrl, buildSoapEnvelope, parseSoapResponse, return_error } from '../../lib/utils';
 
 export async function handleGetTableContents( args: any) {
     try {
