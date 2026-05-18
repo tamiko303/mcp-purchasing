@@ -11,13 +11,18 @@ import path from 'path';
 import dotenv from 'dotenv';
 
 // Import handler functions
-import { handleGetTableContents } from './handlers/handleGetTableContents';
-import { handleGetBusinessPartner } from './handlers/handleGetBusinessPartner';
+import { handleGetTableContents } from './handlers/query/getTableContents'
+import { handleGetScheduleLines } from './handlers/purchasing/getScheduleLines';
+import { handleGetPOItemDetails } from './handlers/purchasing/getPOItemDetails';
+import { handleQueryPurchasingApi } from './handlers/purchasing/queryPurchasingApi';
+import { handleGetGoodsReceipts } from './handlers/material/getGoodsReceipts';
+import { handleGetSupplierInvoices } from './handlers/invoice/getSupplierInvoices';
+import { handleGetBusinessPartner } from './handlers/business-partner/getBusinessPartner';
+import { handleGetPOItemsByDateRange } from './handlers/purchasing/getPOItemsByDateRange';
 import { handleSetSupplierPurchasingBlock } from './handlers/handleSetSupplierPurchasingBlock';
 
 // Import tools
 import { tools } from './tools/tools';
-import { handleGetPOItemsByDateRange } from './handlers/handleGetPOItemsByDateRange';
 
 // Load environment variables from .env file
 dotenv.config({ path: path.resolve(__dirname, '../.env'), quiet: true  });
@@ -94,22 +99,24 @@ export class mcp_purchasing_server {
     });
 
     // Handler for CallToolRequest
+    const HANDLERS: Record<string, (args: any) => Promise<any>> = {
+    'GetBusinessPartner': handleGetBusinessPartner,
+    'GetSupplierInvoices': handleGetSupplierInvoices,
+    'GetGoodsReceipts': handleGetGoodsReceipts,
+    'GetPOItemDetails': handleGetPOItemDetails,
+    'GetPOItemsByDateRange': handleGetPOItemsByDateRange,
+    'GetScheduleLines': handleGetScheduleLines,
+    'QueryPurchasingApi': handleQueryPurchasingApi,
+    'GetTableContents': handleGetTableContents,
+    'SetSupplierPurchasingBlock': handleSetSupplierPurchasingBlock
+};
+
     this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
-      switch (request.params.name) {
-        case 'GetTableContents':
-          return await handleGetTableContents(request.params.arguments);
-        case 'GetBusinessPartner':
-          return await handleGetBusinessPartner(request.params.arguments);
-        case 'SetSupplierPurchasingBlock':
-          return await handleSetSupplierPurchasingBlock(request.params.arguments);
-        case 'GetPOItemsByDateRange':
-          return await handleGetPOItemsByDateRange(request.params.arguments);
-        default:
-          throw new McpError(
-            ErrorCode.MethodNotFound,
-            `Unknown tool: ${request.params.name}`
-          );
-      }
+       const handler = HANDLERS[request.params.name];
+    if (!handler) {
+        throw new McpError(ErrorCode.MethodNotFound, `Unknown tool: ${request.params.name}`);
+    }
+    return handler(request.params.arguments);
     });
 
     // Handle server shutdown on SIGINT (Ctrl+C)

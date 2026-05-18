@@ -70,21 +70,93 @@ export const tools: Tool[] = [
     }
   },
   {
-    name: 'GetPOItemsByDateRange',
-    description: 'Retrieve purchase order items filtered by delivery date range. Returns supplier, material, ordered quantities, amounts and delivery schedule lines.',
-    inputSchema: {
-        type: 'object',
-        properties: {
-            from: {
-                type: 'string',
-                description: 'Delivery date from (inclusive), format: YYYY-MM-DD'
+        name: 'GetScheduleLines',
+        description: 'Returns PO schedule lines by delivery date range. '
+                   + 'First step to discover purchaseOrder + purchaseOrderItem pairs for a period.',
+        inputSchema: {
+            type: 'object',
+            properties: {
+                from: { type: 'string', description: 'Start date YYYY-MM-DD' },
+                to:   { type: 'string', description: 'End date YYYY-MM-DD' },
             },
-            to: {
-                type: 'string',
-                description: 'Delivery date to (inclusive), format: YYYY-MM-DD'
-            }
+            required: ['from', 'to'],
         },
-        required: ['from', 'to']
+    },
+    {
+        name: 'GetPOItemDetails',
+        description: 'Returns master data for one PO item: material, supplier, ordered quantity, price, currency.',
+        inputSchema: {
+            type: 'object',
+            properties: {
+                purchaseOrder:     { type: 'string' },
+                purchaseOrderItem: { type: 'string' },
+            },
+            required: ['purchaseOrder', 'purchaseOrderItem'],
+        },
+    },
+    {
+        name: 'GetGoodsReceipts',
+        description: 'Returns total delivered quantity and amount (GR movements 101/102) for one PO item. '
+                   + 'Reversals are accounted automatically.',
+        inputSchema: {
+            type: 'object',
+            properties: {
+                purchaseOrder:     { type: 'string' },
+                purchaseOrderItem: { type: 'string' },
+            },
+            required: ['purchaseOrder', 'purchaseOrderItem'],
+        },
+    },
+    {
+        name: 'GetSupplierInvoices',
+        description: 'Returns total invoiced quantity and amount for one PO item. '
+                   + 'Use for invoice status check or three-way match.',
+        inputSchema: {
+            type: 'object',
+            properties: {
+                purchaseOrder:     { type: 'string' },
+                purchaseOrderItem: { type: 'string' },
+            },
+            required: ['purchaseOrder', 'purchaseOrderItem'],
+        },
+    },
+    {
+        name: 'GetPOItemsByDateRange',
+        description: `Aggregate report: all PO items with schedule lines in the date range,
+enriched with master data (material, supplier, price), goods receipts, and supplier invoices.
+Use for the full picture over a period. For single items or one data type, prefer atomic tools.`,
+        inputSchema: {
+            type: 'object',
+            properties: {
+                from: { type: 'string', 
+                        description: 'Delivery date from (inclusive), format YYYY-MM-DD' },
+                to:   { type: 'string', 
+                        description: 'Delivery date to (inclusive), format: YYYY-MM-DD' },
+            },
+            required: ['from', 'to'],
+        },
+    },
+    {
+        name: 'QueryApi',
+        description: `Flexible low-level OData query for SAP purchasing APIs.
+Use when standard tools don't cover your scenario: custom filters, extra fields, $expand, $top for sampling.
+Entities: ScheduleLines, POItems, POHeaders, MaterialDocuments, SupplierInvoices.`,
+        inputSchema: {
+            type: 'object',
+            properties: {
+                entity: {
+                    type: 'string',
+                    enum: ['ScheduleLines', 'POItems', 'POHeaders', 'MaterialDocuments', 'SupplierInvoices'],
+                    description: 'SAP entity to query',
+                },
+                filter:  { type: 'string',  description: "OData v2 $filter, e.g. \"PurchaseOrder eq '4500012345'\" or \"DeliveryDate ge datetime'2024-01-01T00:00:00'\"" },
+                select:  { type: 'array', items: { type: 'string' }, description: 'Fields to return' },
+                expand:  { type: 'array', items: { type: 'string' }, description: "Navigation props, e.g. ['to_PurchaseOrder']" },
+                top:     { type: 'number', description: 'Max records (default 100, max 1000)' },
+                skip:    { type: 'number', description: 'Records to skip (pagination)' },
+                orderby: { type: 'string', description: "e.g. 'ScheduleLineDeliveryDate desc'" },
+            },
+            required: ['entity'],
+        },
     }
-  }
 ];
