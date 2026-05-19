@@ -62,6 +62,7 @@ SAP_URL=https://your-sap-host:8000
 SAP_USERNAME=your_username
 SAP_PASSWORD=your_password
 SAP_CLIENT=100
+SAP_LANGUAGE=en
 ```
 
 > **Important:** Never share your `.env` file or commit it to version control. If your password contains `#`, wrap it in quotes.
@@ -79,9 +80,8 @@ SAP_CLIENT=100
   "mcpServers": {
     "mcp-purchasing": {
       "command": "node",
-      "args": [
-        "C:/PATH_TO/mcp-purchasing/dist/index.js"
-      ]
+      "args": ["dist/index.js"],
+      "cwd": "C:/PATH_TO/mcp-purchasing"
     }
   }
 }
