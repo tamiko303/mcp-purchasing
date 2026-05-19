@@ -61,8 +61,8 @@ In the root directory, create a file named `.env` and fill in your SAP credentia
 SAP_URL=https://your-sap-host:8000
 SAP_USERNAME=your_username
 SAP_PASSWORD=your_password
-SAP_CLIENT=100
-SAP_LANGUAGE=en
+SAP_CLIENT=your_client
+SAP_LANGUAGE=your_language
 ```
 
 > **Important:** Never share your `.env` file or commit it to version control. If your password contains `#`, wrap it in quotes.
@@ -271,6 +271,17 @@ mcp-purchasing/
 | `SAP_USERNAME` | ✅ | SAP username |
 | `SAP_PASSWORD` | ✅ | SAP password |
 | `SAP_CLIENT` | ✅ | SAP client number, e.g. `100` |
+| `SAP_LANGUAGE` | — | SAP language, e.g. `en` |
 | `MCP_TRANSPORT` | — | `stdio` (default) or `http` |
 | `MCP_PORT` | — | HTTP port (default: `3000`) |
 | `MCP_HOST` | — | HTTP host (default: `0.0.0.0`) |
+
+
+## For AI agents — SKILL.md
+
+If you are integrating this server into an AI agent or using it with a custom system prompt, see [SKILL.md](./SKILL.md). It describes:
+
+- when to use each tool and which to prefer
+- typical multi-step workflows (three-way match, open items, supplier analysis)
+- important notes on date formats, parallel calls, OData filter syntax
+- response format and error handling

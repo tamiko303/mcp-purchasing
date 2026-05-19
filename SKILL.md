@@ -65,9 +65,9 @@ The user asks: *"Check PO 4500012345 — what's ordered, received, and invoiced?
 Call all three in parallel for each item:
 
 ```
-purchasing:GetPOItemDetails(purchaseOrder, purchaseOrderItem)
-material:GetGoodsReceipts(purchaseOrder, purchaseOrderItem)
-invoice:GetSupplierInvoices(purchaseOrder, purchaseOrderItem)
+GetPOItemDetails(purchaseOrder, purchaseOrderItem)
+GetGoodsReceipts(purchaseOrder, purchaseOrderItem)
+GetSupplierInvoices(purchaseOrder, purchaseOrderItem)
 ```
 
 Compare `orderedQuantity` vs `deliveredQuantity` vs `invoicedQuantity` and report discrepancies.
