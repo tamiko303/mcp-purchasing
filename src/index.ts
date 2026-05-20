@@ -23,6 +23,7 @@ import { handleGetSupplierInvoices }        from './handlers/invoice/getSupplier
 import { handleGetBusinessPartner }         from './handlers/business-partner/getBusinessPartner';
 import { handleGetPOItemsByDateRange }      from './handlers/purchasing/getPOItemsByDateRange';
 import { handleSetSupplierPurchasingBlock } from './handlers/handleSetSupplierPurchasingBlock';
+import { handleGetOpenPOItems }             from './handlers/purchasing/getOpenPOItems';
 
 // Import tools
 import { tools } from './tools/tools';
@@ -66,6 +67,7 @@ const HANDLERS: Record<string, (args: any) => Promise<any>> = {
     'GetScheduleLines':           handleGetScheduleLines,
     'QueryPurchasingApi':         handleQueryPurchasingApi,
     'GetTableContents':           handleGetTableContents,
+    'GetOpenPOItems':             handleGetOpenPOItems,
     'SetSupplierPurchasingBlock': handleSetSupplierPurchasingBlock,
 };
 

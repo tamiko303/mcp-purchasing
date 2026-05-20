@@ -158,5 +158,23 @@ Entities: ScheduleLines, POItems, POHeaders, MaterialDocuments, SupplierInvoices
             },
             required: ['entity'],
         },
-    }
+    },
+    {
+    name: 'GetOpenPOItems',
+    description:
+        `Returns all open PO items (ordered but not fully delivered) within the scheduled delivery 
+date range. Each item includes ordered/delivered/open quantities, open %, isOverdue flag, supplier, 
+material, price. Results sorted: overdue first, then by delivery date. Use to monitor delivery 
+backlog and identify at-risk orders.`,
+    inputSchema: {
+        type: 'object',
+        properties: {
+            from: { type: 'string', 
+                        description: 'Delivery date from (inclusive), format YYYY-MM-DD' },
+            to:   { type: 'string', 
+                    description: 'Delivery date to (inclusive), format: YYYY-MM-DD' },
+        },
+        required: ['from', 'to'],
+    },
+  },
 ];
